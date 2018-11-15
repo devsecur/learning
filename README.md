@@ -13,3 +13,14 @@ In lots of papers and books, the subject is highly theoretical. With the help of
 ## Make learning effective
 
 Often, I deal with lots of different formats and media by consuming knowledge. In most cases, I wish I had a pen or a way to create a direct reference to make notes or develop ideas. Especially when working with a smartphone or a book, I don't have the tools in place to make suitable notes.
+
+# Method
+
+I start creating markdown files, to describe the topic. After a summary, I start with the references. I work with (TODO), (FIXME), (IDEA) and (NOTE) to find stuff.
+
+## Editor
+
+I use [Atom] and the plugin [Todo Show].
+
+[Atom]: https://atom.io/
+[Todo Show]: https://atom.io/packages/todo-show
