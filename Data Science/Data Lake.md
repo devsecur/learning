@@ -5,7 +5,7 @@ NOTE. I was very skeptical when I first heard the word _data lake_. Is it a good
 NOTE. Now, I think there are some really interesting products, papers and approaches to profit by a data lake.
 
 # References
-
+//TODO: Blub
 ## Projects
 //TODO: Bla [Issue: https://github.com/devsecur/learning/issues/1]
 ### Kylo
