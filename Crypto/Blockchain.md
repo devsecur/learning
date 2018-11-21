@@ -6,8 +6,10 @@ NOTE: A blockchain is a linked list records.
 
 ## Projects
 
-### Do it yourself Blockchain in python
+### [Do it yourself Blockchain in Python]
 
 > A simple Blockchain in Python
 
-TODO: I want to play around with Blockchain. Therefore, I want to have a look at https://github.com/dvf/blockchain [Issue: https://github.com/devsecur/learning/issues/4]
+TODO: I want to play around with Blockchain. [Issue: https://github.com/devsecur/learning/issues/4]
+
+[Do it yourself Blockchain in Python]: https://github.com/dvf/blockchain
