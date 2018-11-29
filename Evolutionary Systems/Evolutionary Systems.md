@@ -1,4 +1,4 @@
-# Evolving Systems
+# Evolutionary Systems
 
 1. Environments are surounding with observable phenomenes
 2. Population ist die Gesamtheit aller Lebewesen
