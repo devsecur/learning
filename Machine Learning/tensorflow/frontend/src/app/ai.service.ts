@@ -2,24 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 
-import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
+import { Testset } from './testset';
+import { TESTSET } from './mock-testset';
 import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
-export class HeroService {
+export class AiService {
 
   constructor(private messageService: MessageService) { }
 
-  getHeroes(): Observable<Hero[]> {
-    // TODO: send the message _after_ fetching the heroes
+  getTestset(): Observable<Testset[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return of(HEROES);
+    return of(TESTSET);
   }
 
-  getHero(id: number): Observable<Hero> {
-    // TODO: send the message _after_ fetching the hero
+  getTest(id: number): Observable<Testset> {
     this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(HEROES.find(hero => hero.id === id));
+    return of(TESTSET.find(hero => hero.id === id));
   }
 }

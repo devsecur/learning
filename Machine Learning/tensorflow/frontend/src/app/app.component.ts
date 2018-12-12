@@ -11,5 +11,5 @@ TODO Create Real Interface with Material and d3js
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-tour-of-heroes';
+  title = 'AI Dashboard';
 }

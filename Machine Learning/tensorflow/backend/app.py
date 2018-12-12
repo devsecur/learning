@@ -1,5 +1,13 @@
+import io
+import numpy as np
+
 from flask import Flask
+from flask import Response
+from flask import jsonify
+
+
 from marvin import Learning
+from Pagination import Pagination
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -7,45 +15,42 @@ app = Flask(__name__)
 
 test = Learning()
 
+
+@app.route('/test/<int:page>')
+def testset(page):
+    paginator = Pagination(test.predictions.tolist())
+    return jsonify(paginator.page(page))
+
+
 #TODO Create Microservice for Marvin with only a few Options. Later: Create multiple Microservices for Preprocessing and so on
 #TODO Create Middleware for frontend communication
 @app.route('/')
 def hello():
     return "Hello World!"
 
-#TODO Change Plot to Json Object to show with d3js
-def print_images():
-    global test
-    # Visualize preprocessed images
-    figure = plt.figure(figsize=(10,10))
-    for i in range(25):
-        plt.subplot(5,5,i+1)
-        plt.xticks([])
-        plt.yticks([])
-        plt.grid(False)
-        plt.imshow(test.train_images[i], cmap=plt.cm.binary)
-        plt.xlabel(test.class_names[test.train_labels[i]])
-    return figure
-
-#TODO Create real Plot function for Image and classification Statistics
-@app.route('/plot.png')
-def plot_png():
-    fig = print_images()
+@app.route('/plot/<int:id>')
+def plot(id):
+    fig = plot_image(id)
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
 #TODO Function for Ploting one Image
-def print_image():
+def print_image(id):
     # Visualize one image
-    plt.figure()
-    plt.imshow(test.train_images[0])
-    plt.colorbar()
+    figure = plt.figure()
+    plt.imshow(test.train_set_pp[id], cmap=plt.cm.binary)
     plt.grid(False)
-    plt.savefig("foo.png")
+    return figure
 
-def plot_images():
-    def plot_image(i, predictions_array, true_label, img, class_names):
+def get_infos():
+    results = {}
+    results["Test Set"] = len(test.test_set_pp)
+    results["Train Set"] = len(test.train_set_pp)
+    results["Class Names"] = test.class_names
+
+def plot_image(id):
+    def image(i, predictions_array, true_label, img, class_names):
         predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
         plt.grid(False)
         plt.xticks([])
@@ -65,7 +70,7 @@ def plot_images():
             color=color)
         #plt.savefig("predictions_%s.png"%i)
 
-    def plot_value_array(i, predictions_array, true_label):
+    def value_array(i, predictions_array, true_label):
         predictions_array, true_label = predictions_array[i], true_label[i]
         plt.grid(False)
         plt.xticks([])
@@ -78,22 +83,13 @@ def plot_images():
         thisplot[true_label].set_color('blue')
         #plt.savefig("predictions_values_%s.png"%i)
 
-    num_rows = 10
-    num_cols = 10
-    num_images = num_rows*num_cols
-    plt.figure(figsize=(2*2*num_cols, 2*num_rows))
-    for i in range(num_images):
-        plt.subplot(num_rows, 2*num_cols, 2*i+1)
-        plot_image(i, predictions, test.test_labels, test.test_images, test.class_names)
-        plt.subplot(num_rows, 2*num_cols, 2*i+2)
-        plot_value_array(i, predictions, test.test_labels)
-    plt.savefig("predictions.png")
+    figure = plt.figure(figsize=(4, 2))
+    plt.subplot(1, 2, 1)
+    image(id, test.predictions, test.test_labels, test.test_set_pp, test.class_names)
+    plt.subplot(1, 2, 2)
+    value_array(id, test.predictions, test.test_labels)
+    return figure
+
 
 if __name__ == '__main__':
-    test.preprocessing()
-    test.layers()
-    test.compile()
-    test.learning()
-    test.evaluate()
-    predictions = test.predict(test.test_images)
     app.run(host='0.0.0.0')
