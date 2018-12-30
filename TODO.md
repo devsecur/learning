@@ -1,5 +1,9 @@
 # TODO
 
+## Learning should be reproducable
+
+To make reproducable learnings, i define goals and then reduce them to step by step items until reaching the learn goal. These step by step items should be MECE complete.
+
 ToDo list with complexity (c) and effort (e) to spend from 1 to 10
 
 * Deploy a complex docker application to AWS with Kubernetes (c:10, e:4)
