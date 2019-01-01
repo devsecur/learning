@@ -15,3 +15,10 @@ services:
     volumes:
       - ./frontend/src:/usr/src/app/src
     command: ["ng", "serve", "--host", "0.0.0.0", "--poll", "1"]
+  middleware:
+    build: ./middleware
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./middleware:/app
+    command: ["python", "manage.py", "runserver", "0.0.0.0:5001"]
