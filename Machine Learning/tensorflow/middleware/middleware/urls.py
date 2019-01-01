@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 router.register(r'datasets', datasetViews.DatasetViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path(r'api-auth/', include('rest_framework.urls'))
 ]

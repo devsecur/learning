@@ -13,7 +13,7 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
   styleUrls: ['./results.component.scss'],
 })
 export class ResultsComponent implements OnInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title', 'select'];
+  displayedColumns: string[] = ['dataset_name', 'number_of_records'];
   exampleDatabase: ExampleHttpDao | null;
   data: GithubIssue[] = [];
 
@@ -44,12 +44,13 @@ export class ResultsComponent implements OnInit {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
-
-          return data.items;
+          this.resultsLength = 1;
+          console.log(data)
+          return data;
         }),
         catchError(() => {
           this.isLoadingResults = false;
+          console.log("bla")
           // Catch if the GitHub API has reached its rate limit. Return empty data.
           this.isRateLimitReached = true;
           return observableOf([]);
@@ -60,14 +61,11 @@ export class ResultsComponent implements OnInit {
 
 export interface GithubApi {
   items: GithubIssue[];
-  total_count: number;
 }
 
 export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
+  dataset_name: string;
+  number_of_records: string;
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
@@ -75,7 +73,11 @@ export class ExampleHttpDao {
   constructor(private http: HttpClient) {}
 
   getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
+    /** const href = 'https://api.github.com/search/issues';
+    const requestUrl =
+        `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`; */
+
+    const href = '/api/datasets/';
     const requestUrl =
         `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`;
 
